@@ -13,6 +13,8 @@ export class HttpService {
     private http: HttpClient
   ) { }
 
+  url = "https://127.0.0.1/";
+
   mock = [
     {
       uid: "1",
@@ -33,35 +35,50 @@ export class HttpService {
   ]
 
   getAllWorkers(): Observable<Worker[]> {
-    // return this.http.get()
     return of(this.mock).pipe(take(1))
+
+    // return this.http.get<Worker[]>(`${this.url}/workers`)
   }
 
   getOneWorker(uid: string): Observable<Worker> {
-    // 
     return of(this.mock[0]).pipe(take(1))
+
+    // return this.http.get<Worker>(`${this.url}/workers/${uid}`)
   }
 
   updateWorker(worker: Worker): Observable<any> {
     this.mock[0] = Object.assign(this.mock[0], worker)
     return of([200])
+
+    // TODO set body, headers for api
+    // return this.http.patch(`${this.url}/workers/${worker.uid}`, worker, {})
   }
 
   addWorker(worker: Worker): Observable<any> {
     this.mock.push(worker)
     return of([200])
+
+    //TODO set body, headers for api
+    // return this.http.post(`${this.url}/workers`, worker, {})
   }
 
   deleteWorker(uid: string): Observable<any> {
     console.log(uid);
     this.mock.pop();
     return of([200])
+
+    // return this.http.delete(`${this.url}/workers/${uid}`)
   }
 
   giveBonus(uid: string, amount: number): Observable<any> {
     console.log(uid, amount);
 
     return of([200])
+
+    // TODO set for api
+    // const headers = { 'nontent-type': 'application/json' };
+    // const body = { amount: amount };
+    // return this.http.post(`${this.url}/bonus/${uid}`, body, { headers })
   }
 
 }
