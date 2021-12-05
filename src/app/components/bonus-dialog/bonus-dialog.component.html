@@ -1,0 +1,11 @@
+<h2>Premia dla pracownika</h2>
+<h2>{{data.name}} {{data.surname}}</h2>
+<div mat-dialog-content>
+    <mat-form-field>
+        <input matInput placeholder="Kwota" [(ngModel)]="amount">
+    </mat-form-field>zł
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button (click)="onNoClick()">Anuluj</button>
+  <button mat-raised-button color="primary" (click)="onConfirm()" cdkFocusInitial>Premia</button>
+</div>

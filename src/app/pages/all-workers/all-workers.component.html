@@ -1,1 +1,66 @@
-<p>all-workers works!</p>
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+    <!--- Note that these columns can be defined in any order.
+          The actual rendered columns are set as a property on the row definition" -->
+  
+    <!-- Position Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> imie </th>
+      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+    </ng-container>
+  
+    <!-- Name Column -->
+    <ng-container matColumnDef="surname">
+      <th mat-header-cell *matHeaderCellDef> nazwisko </th>
+      <td mat-cell *matCellDef="let element"> {{element.surname}} </td>
+    </ng-container>
+  
+    <!-- Weight Column -->
+    <ng-container matColumnDef="position">
+      <th mat-header-cell *matHeaderCellDef> stanowisko </th>
+      <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+    </ng-container>
+  
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="salary">
+      <th mat-header-cell *matHeaderCellDef> wypłata </th>
+      <td mat-cell *matCellDef="let element"> {{element.salary}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="last_bonus_date">
+      <th mat-header-cell *matHeaderCellDef> Data ostatniej premii </th>
+      <td mat-cell *matCellDef="let element"> {{element.last_bonus_date?.toLocaleDateString() ?? "Brak"}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="edit">
+      <th mat-header-cell *matHeaderCellDef>  </th>
+      <td mat-cell *matCellDef="let element"> 
+        <a [routerLink]="[ 'edit', element.uid ]">
+          <button mat-raised-button>Edytuj</button> 
+        </a>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="delete">
+      <th mat-header-cell *matHeaderCellDef>  </th>
+      <td mat-cell *matCellDef="let element"> 
+        <button mat-raised-button color="warn" (click)="openDeleteDialog(element)">Usuń</button> 
+      </td>
+    </ng-container>
+    
+    <ng-container matColumnDef="bonus">
+      <th mat-header-cell *matHeaderCellDef>  </th>
+      <td mat-cell *matCellDef="let element"> 
+        <button mat-raised-button color=""  (click)="openBonusDialog(element)">Premia</button> 
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+<div class="addButtonDiv">
+  <a [routerLink]="[ 'add' ]">
+    <button mat-raised-button color="primary">Dodaj nowego Pracownika</button> 
+  </a>
+</div>

@@ -7,25 +7,20 @@ import { Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
-  selector: 'app-edit-worker',
-  templateUrl: './edit-worker.component.html',
-  styleUrls: ['./edit-worker.component.css']
+  selector: 'app-add-worker',
+  templateUrl: './add-worker.component.html',
+  styleUrls: ['./add-worker.component.css']
 })
-export class EditWorkerComponent implements OnInit {
+export class AddWorkerComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private http: HttpService,
     private fb: FormBuilder,
-    private _snackBar: MatSnackBar
-  ) { }
-
-  uid: string = ""
-  person: Worker | null = null;
+    private _snackBar: MatSnackBar) { }
 
   WorkerForm = this.fb.group({
-    uid: ['', Validators.required],
     name: ['', Validators.required],
     surname: ['', Validators.required],
     position: ['', Validators.required],
@@ -33,28 +28,13 @@ export class EditWorkerComponent implements OnInit {
   })
 
   ngOnInit(): void {
-    this.route.params.subscribe(x => {
-      this.uid = x.uid
-      this.getWorker(x.uid)
-    })
-  }
-
-  getWorker(uid: string) {
-    this.http.getOneWorker(uid).subscribe(data => {
-      this.person = data
-      this.WorkerForm.controls['uid'].setValue(data.uid)
-      this.WorkerForm.controls['name'].setValue(data.name)
-      this.WorkerForm.controls['surname'].setValue(data.surname)
-      this.WorkerForm.controls['position'].setValue(data.position)
-      this.WorkerForm.controls['salary'].setValue(+data.salary)
-    })
   }
 
   onSubmit() {
-    this.http.updateWorker(this.WorkerForm.value).subscribe(res => {
+    this.http.addWorker(this.WorkerForm.value).subscribe(res => {
       if (res / 100 == 2) {
         this.router.navigateByUrl("/")
-        this.openSnackBar("Pomyślnie zedytowano")
+        this.openSnackBar("Pomyślnie dodano")
       }
     })
   }
@@ -62,5 +42,6 @@ export class EditWorkerComponent implements OnInit {
   openSnackBar(message: string) {
     this._snackBar.open(message, '', { duration: 2000, panelClass: ["green"] });
   }
+
 
 }

@@ -1,0 +1,14 @@
+:host {
+}
+
+table {
+  min-width:70vw;
+}
+  
+.addButtonDiv{
+  min-width: 60vw;
+  display:flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  margin-top:15px;
+}

@@ -1,0 +1,8 @@
+<h2> Czy chcesz usunąć pracownika</h2
+><h2> {{data.name}} {{data.surname}} ?</h2>
+<div mat-dialog-content>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button (click)="onNoClick()">Anuluj</button>
+  <button mat-raised-button color="warn" (click)="onConfirm()" cdkFocusInitial>Usuń</button>
+</div>

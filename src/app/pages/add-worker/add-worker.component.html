@@ -1,0 +1,26 @@
+<form [formGroup]="WorkerForm" (ngSubmit)="onSubmit()">
+
+    <mat-form-field>
+        <mat-label for="name">Imię </mat-label>
+        <input id="name" #name matInput type="text" formControlName="name">
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label for="surname">Nazwisko </mat-label>
+        <input id="surname" matInput type="text" formControlName="surname">
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label for="position">Stanowisko </mat-label>
+        <input id="position" matInput type="text" formControlName="position">
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label for="salary">Wypłata </mat-label>
+        <input id="salary" matInput type="number" formControlName="salary">
+    </mat-form-field>
+
+    <button mat-raised-button type="submit" [disabled]="!WorkerForm.valid">
+        Zapisz
+    </button>
+</form>
