@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Employee } from 'src/app/models/GET/Employee';
 
 @Component({
   selector: 'app-add-worker',
@@ -21,9 +22,9 @@ export class AddWorkerComponent implements OnInit {
     private _snackBar: MatSnackBar) { }
 
   WorkerForm = this.fb.group({
-    name: ['', Validators.required],
-    surname: ['', Validators.required],
-    position: ['', Validators.required],
+    name: ['', [Validators.required, Validators.minLength(3)]],
+    surname: ['', [Validators.required, Validators.minLength(3)]],
+    position: ['', [Validators.required, Validators.minLength(3)]],
     salary: ['0', Validators.required],
   })
 
@@ -31,12 +32,24 @@ export class AddWorkerComponent implements OnInit {
   }
 
   onSubmit() {
-    this.http.addWorker(this.WorkerForm.value).subscribe(res => {
-      if (res / 100 == 2) {
+    let newWorker = {
+      first_name: this.WorkerForm.get('name')?.value,
+      last_name: this.WorkerForm.get('surname')?.value,
+      position: this.WorkerForm.get('position')?.value,
+      salary: +this.WorkerForm.get('salary')?.value,
+    }
+    this.http.addWorker(newWorker).subscribe(res => {
+      console.log(res.status);
+
+      if (res.data) {
         this.router.navigateByUrl("/")
         this.openSnackBar("Pomyślnie dodano")
       }
-    })
+    },
+      error => {
+        this._snackBar.open("Wystąpił błąd", '', { duration: 2000, panelClass: ["red"] });
+
+      })
   }
 
   openSnackBar(message: string) {

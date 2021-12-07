@@ -1,4 +1,5 @@
-<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+<ng-container *ngIf="dataSource.length>0; else elseTemplate">
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 table">
 
     <!--- Note that these columns can be defined in any order.
           The actual rendered columns are set as a property on the row definition" -->
@@ -23,7 +24,7 @@
   
     <!-- Symbol Column -->
     <ng-container matColumnDef="salary">
-      <th mat-header-cell *matHeaderCellDef> wypłata </th>
+      <th mat-header-cell *matHeaderCellDef> wypłata (zł)</th>
       <td mat-cell *matCellDef="let element"> {{element.salary}} </td>
     </ng-container>
 
@@ -35,7 +36,7 @@
     <ng-container matColumnDef="edit">
       <th mat-header-cell *matHeaderCellDef>  </th>
       <td mat-cell *matCellDef="let element"> 
-        <a [routerLink]="[ 'edit', element.uid ]">
+        <a [routerLink]="[ '/edit', element.uid ]">
           <button mat-raised-button>Edytuj</button> 
         </a>
       </td>
@@ -60,7 +61,16 @@
   </table>
 
 <div class="addButtonDiv">
-  <a [routerLink]="[ 'add' ]">
+  <div class="pages">
+    Strony: 
+    <a *ngFor="let pg of pages" [routerLink]="[ '/page', pg ]">{{pg}}</a>
+  </div>
+  <a [routerLink]="[ '/add/' ]" class="btn">
     <button mat-raised-button color="primary">Dodaj nowego Pracownika</button> 
   </a>
 </div>
+</ng-container>
+<ng-template #elseTemplate>
+  <mat-spinner></mat-spinner>
+</ng-template>
+

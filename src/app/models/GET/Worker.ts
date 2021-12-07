@@ -1,8 +1,8 @@
 export interface Worker {
-    uid: string,
+    uid: number,
     name: string;
     surname: string;
     position: string;
-    salary: string;
-    last_bonus_date: Date;
+    salary: number;
+    last_bonus_date: Date | undefined;
 }

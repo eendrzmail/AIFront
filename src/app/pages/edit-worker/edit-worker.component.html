@@ -1,14 +1,14 @@
-<div *ngIf="person != null">
+<ng-container *ngIf="person != null; else elseTemplate">
     <form [formGroup]="WorkerForm" (ngSubmit)="onSubmit()">
 
         <mat-form-field>
-            <mat-label for="name">Imię: </mat-label>
-            <input id="name" #name matInput type="text" formControlName="name">
+            <mat-label for="first_name">Imię: </mat-label>
+            <input id="first_name" #name matInput type="text" formControlName="first_name">
         </mat-form-field>
 
         <mat-form-field>
-            <mat-label for="surname">Nazwisko: </mat-label>
-            <input id="surname" matInput type="text" formControlName="surname">
+            <mat-label for="last_name">Nazwisko: </mat-label>
+            <input id="last_name" matInput type="text" formControlName="last_name">
         </mat-form-field>
 
         <mat-form-field>
@@ -27,4 +27,7 @@
 
 
     </form>
-</div>
+</ng-container>
+<ng-template #elseTemplate>
+    <mat-progress-spinner></mat-progress-spinner>
+</ng-template>

@@ -7,7 +7,8 @@ import { RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   { path: '', component: AllWorkersComponent },
   { path: 'edit/:uid', component: EditWorkerComponent },
-  { path: 'add', component: AddWorkerComponent },
+  { path: 'add/', component: AddWorkerComponent },
+  { path: 'page/:page', component: AllWorkersComponent },
 ];
 
 @NgModule({

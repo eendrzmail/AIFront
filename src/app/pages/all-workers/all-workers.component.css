@@ -1,14 +1,34 @@
-:host {
-}
 
 table {
   min-width:70vw;
 }
   
 .addButtonDiv{
+  padding-top:25px;
+  margin-top: 25px;
   min-width: 60vw;
   display:flex;
-  align-items: flex-end;
-  justify-content: flex-end;
+  align-items: flex;
+  justify-content: flex;
   margin-top:15px;
+  margin-bottom: 100px;
+}
+
+.table{
+  margin-top: 100px;
+}
+
+.pages{
+  color:black;
+  font-size: 1.5rem;
+}
+.pages a {
+  text-decoration: none;
+  color:black;
+  margin: 0 10px;
+
+}
+
+.btn{
+  margin-left: auto;
 }

@@ -1,3 +1,4 @@
+import { Employee } from './../../models/GET/Employee';
 import { Worker } from './../../models/GET/Worker';
 import { HttpService } from './../../services/http.service';
 import { Component, OnInit } from '@angular/core';
@@ -22,13 +23,13 @@ export class EditWorkerComponent implements OnInit {
   ) { }
 
   uid: string = ""
-  person: Worker | null = null;
+  person: Employee | null = null;
 
   WorkerForm = this.fb.group({
-    uid: ['', Validators.required],
-    name: ['', Validators.required],
-    surname: ['', Validators.required],
-    position: ['', Validators.required],
+    id: ['', Validators.required],
+    first_name: ['', [Validators.required, Validators.minLength(3)]],
+    last_name: ['', [Validators.required, Validators.minLength(3)]],
+    position: ['', [Validators.required, Validators.minLength(3)]],
     salary: ['0', Validators.required],
   })
 
@@ -42,21 +43,33 @@ export class EditWorkerComponent implements OnInit {
   getWorker(uid: string) {
     this.http.getOneWorker(uid).subscribe(data => {
       this.person = data
-      this.WorkerForm.controls['uid'].setValue(data.uid)
-      this.WorkerForm.controls['name'].setValue(data.name)
-      this.WorkerForm.controls['surname'].setValue(data.surname)
+      console.log(data)
+      this.WorkerForm.controls['id'].setValue(data.id)
+      this.WorkerForm.controls['first_name'].setValue(data.first_name)
+      this.WorkerForm.controls['last_name'].setValue(data.last_name)
       this.WorkerForm.controls['position'].setValue(data.position)
-      this.WorkerForm.controls['salary'].setValue(+data.salary)
+      this.WorkerForm.controls['salary'].setValue(data.salary)
     })
   }
 
   onSubmit() {
-    this.http.updateWorker(this.WorkerForm.value).subscribe(res => {
-      if (res / 100 == 2) {
+    this.person = Object.assign(this.person, this.WorkerForm.value)
+    if (!this.person) return
+
+    this.http.updateWorker(this.person).subscribe(res => {
+      console.log(res);
+      if (res.data) {
         this.router.navigateByUrl("/")
         this.openSnackBar("Pomyślnie zedytowano")
       }
-    })
+      else {
+        this._snackBar.open("Wystąpił błąd", '', { duration: 2000, panelClass: ["red"] });
+      }
+    },
+      error => {
+        this._snackBar.open("Wystąpił błąd", '', { duration: 2000, panelClass: ["red"] });
+
+      })
   }
 
   openSnackBar(message: string) {
