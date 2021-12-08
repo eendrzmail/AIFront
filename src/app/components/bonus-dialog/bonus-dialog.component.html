@@ -2,10 +2,10 @@
 <h2>{{data.name}} {{data.surname}}</h2>
 <div mat-dialog-content>
     <mat-form-field>
-        <input matInput placeholder="Kwota" [(ngModel)]="amount">
+        <input #input matInput placeholder="Kwota" [(ngModel)]="amount" min="100">
     </mat-form-field>zł
 </div>
 <div mat-dialog-actions>
   <button mat-raised-button (click)="onNoClick()">Anuluj</button>
-  <button mat-raised-button color="primary" (click)="onConfirm()" cdkFocusInitial>Premia</button>
+  <button mat-raised-button color="primary" (click)="onConfirm()" cdkFocusInitial [disabled]="amount<100">Premia</button>
 </div>

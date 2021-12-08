@@ -19,6 +19,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { DeleteDialogComponent } from './components/delete-dialog/delete-dialog.component';
 import { BonusDialogComponent } from './components/bonus-dialog/bonus-dialog.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { DetaildComponent } from './pages/detaild/detaild.component';
 
 
 
@@ -29,7 +30,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     EditWorkerComponent,
     AddWorkerComponent,
     DeleteDialogComponent,
-    BonusDialogComponent
+    BonusDialogComponent,
+    DetaildComponent
   ],
   imports: [
     BrowserModule,

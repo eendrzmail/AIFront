@@ -1,0 +1,42 @@
+<ng-container *ngIf="person != null; else elseTemplate">
+    <div style="display:flex;gap:3rem">
+        <div>
+            <h2>Informacje</h2>
+            <table>
+                <tr>
+                    <td>Imię:</td>
+                    <td>{{person.first_name}}</td>
+                </tr>
+                <tr>
+                    <td>Nazwisko:</td>
+                    <td>{{person.last_name}}</td>
+                </tr>
+                <tr>
+                    <td>Stanowisko:</td>
+                    <td>{{person.position}}</td>
+                </tr>
+                <tr>
+                    <td>Wypłata:</td>
+                    <td>{{person.salary}}zł</td>
+                </tr>
+            </table>
+        </div>
+
+        <div>
+            <h2>Historia premii</h2>
+            <table>
+                <tr *ngFor="let premia of person.bonuses">
+                    <td>{{(premia.created_at+"").substr(0,10)}}</td>
+                    <td style="padding-left:35px;">{{premia.amount}}zł</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <mat-progress-spinner></mat-progress-spinner>
+
+
+</ng-container>
+<ng-template #elseTemplate>
+    <mat-progress-spinner></mat-progress-spinner>
+    pobieranie danych
+</ng-template>
