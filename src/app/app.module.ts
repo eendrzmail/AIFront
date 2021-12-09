@@ -20,6 +20,8 @@ import { DeleteDialogComponent } from './components/delete-dialog/delete-dialog.
 import { BonusDialogComponent } from './components/bonus-dialog/bonus-dialog.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { DetaildComponent } from './pages/detaild/detaild.component';
+import { MatSortModule } from '@angular/material/sort';
+
 
 
 
@@ -46,7 +48,8 @@ import { DetaildComponent } from './pages/detaild/detaild.component';
     MatInputModule,
     MatSnackBarModule,
     MatDialogModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatSortModule
   ],
   providers: [],
   bootstrap: [AppComponent]

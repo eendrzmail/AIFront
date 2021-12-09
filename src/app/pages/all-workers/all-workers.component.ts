@@ -2,28 +2,35 @@ import { Employee } from './../../models/GET/Employee';
 import { DeleteDialogComponent } from './../../components/delete-dialog/delete-dialog.component';
 import { Worker } from './../../models/GET/Worker';
 import { HttpService } from './../../services/http.service';
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { BonusDialogComponent } from 'src/app/components/bonus-dialog/bonus-dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
+import { MatSort, Sort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { LiveAnnouncer } from '@angular/cdk/a11y';
 
 @Component({
   selector: 'app-all-workers',
   templateUrl: './all-workers.component.html',
   styleUrls: ['./all-workers.component.css']
 })
-export class AllWorkersComponent implements OnInit {
+export class AllWorkersComponent implements OnInit, AfterViewInit {
+  displayedColumns: string[] = ['name', 'surname', 'position', 'salary', 'last_bonus_date', "edit", "delete", "bonus"];
+  dataSource = new MatTableDataSource<TableItem>();
 
   constructor(
     private HttpService: HttpService,
     public dialog: MatDialog,
     private _snackBar: MatSnackBar,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private _liveAnnouncer: LiveAnnouncer
   ) { }
 
-  displayedColumns: string[] = ['name', 'surname', 'position', 'salary', 'last_bonus_date', "edit", "delete", "bonus"];
-  dataSource: TableItem[] = [];
+
+
+  @ViewChild(MatSort) sort: MatSort | null = null;
 
   page = 1;
   max_pages = 1;
@@ -43,6 +50,10 @@ export class AllWorkersComponent implements OnInit {
     })
   }
 
+  ngAfterViewInit(): void {
+    this.dataSource.sort = this.sort;
+  }
+
   getWorkers(page: number) {
     this.HttpService.getAllWorkers(page).subscribe(x => {
       let temp: TableItem[] = []
@@ -60,7 +71,10 @@ export class AllWorkersComponent implements OnInit {
         }
         )
       })
-      this.dataSource = temp;
+      this.dataSource = new MatTableDataSource(temp);
+      this.dataSource.sort = this.sort;
+      console.log(this.dataSource.sort);
+
     })
   }
 
@@ -120,6 +134,18 @@ export class AllWorkersComponent implements OnInit {
           })
       }
     });
+  }
+
+  announceSortChange(sortState: Sort) {
+    // This example uses English messages. If your application supports
+    // multiple language, you would internationalize these strings.
+    // Furthermore, you can customize the message to add additional
+    // details about the values being sorted.
+    if (sortState.direction) {
+      this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
+    } else {
+      this._liveAnnouncer.announce('Sorting cleared');
+    }
   }
 
 
